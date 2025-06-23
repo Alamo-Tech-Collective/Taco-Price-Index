@@ -78,4 +78,4 @@ gem "google-maps", "~> 3.0.7"
 gem "stimulus_reflex", "~> 3.5.5"
 
 gem "dartsass-rails", "~> 0.5.1"
-gem "cssbundling-rails", "~> 1.1.0"
+gem "cssbundling-rails", "~> 1.4.3"
