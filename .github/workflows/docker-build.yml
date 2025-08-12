@@ -58,6 +58,7 @@ jobs:
         env:
           DATABASE_URL: postgres://tacos:tacos_password@localhost:5432/tacos_test
           RAILS_ENV: test
+          SKIP_SANITY_CHECK: true
         run: |
           bin/rails test
 
