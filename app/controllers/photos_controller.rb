@@ -47,4 +47,3 @@ class PhotosController < ApplicationController
       params.require(:photo).permit(:taco_id, :user_id, :url, :is_user_uploaded)
     end
 end
-

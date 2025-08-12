@@ -48,4 +48,3 @@ class TacosController < ApplicationController
       params.require(:taco).permit(:restaurant_id, :name, :description, :price_cents, :calories, :tortilla_type, :protein_type, :is_vegan, :is_bulk, :is_daily_special, :available_from, :available_to)
     end
 end
-

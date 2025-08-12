@@ -1,6 +1,6 @@
 class TestController < ApplicationController
-  skip_before_action :require_authentication, only: [:map_test]
-  
+  skip_before_action :require_authentication, only: [ :map_test ]
+
   def map_test
     @markers = [
       {
@@ -25,7 +25,7 @@ class TestController < ApplicationController
           "Sunday: 7:00 AM – 9:00 PM"
         ],
         price_level: 1,
-        types: ["restaurant", "food", "point_of_interest", "establishment"]
+        types: [ "restaurant", "food", "point_of_interest", "establishment" ]
       },
       {
         id: "test-marker-2",

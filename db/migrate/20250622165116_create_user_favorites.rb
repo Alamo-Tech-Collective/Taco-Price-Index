@@ -8,6 +8,6 @@ class CreateUserFavorites < ActiveRecord::Migration[7.0]
     end
 
     add_foreign_key :user_favorites, :restaurants, column: :restaurant_id
-    add_index :user_favorites, [:user_id, :restaurant_id], unique: true
+    add_index :user_favorites, [ :user_id, :restaurant_id ], unique: true
   end
 end

@@ -10,10 +10,10 @@ module TacoPriceIndex
   class Application < Rails::Application
     # Load environment variables from .env file
     config.before_configuration do
-      env_file = File.join(Rails.root, '.env')
+      env_file = File.join(Rails.root, ".env")
       if File.exist?(env_file)
         File.foreach(env_file) do |line|
-          key, value = line.strip.split('=', 2)
+          key, value = line.strip.split("=", 2)
           ENV[key] = value if key.present? && value.present?
         end
       end

@@ -41,7 +41,7 @@ gem "thruster", require: false
 # gem "image_processing", "~> 1.2"
 
 # Geocoding and Google Maps integration
-gem 'geocoder'
+gem "geocoder"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

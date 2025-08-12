@@ -33,7 +33,7 @@ class ReviewsController < ApplicationController
 
   def update
     if @review.update(review_params)
-      redirect_to [@restaurant, @review], notice: "Review was successfully updated."
+      redirect_to [ @restaurant, @review ], notice: "Review was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -54,13 +54,13 @@ class ReviewsController < ApplicationController
 
     def review_params
       params.require(:review).permit(
-        :restaurant_id, 
-         
-        :author_url, 
-        :google_rating, 
-        :fullness_rating, 
-        :content, 
-        :review_date, 
+        :restaurant_id,
+
+        :author_url,
+        :google_rating,
+        :fullness_rating,
+        :content,
+        :review_date,
         :language,
         photos: []
       )
