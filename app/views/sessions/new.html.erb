@@ -1,11 +1,63 @@
-<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
-<%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
-
-<%= form_with url: session_path do |form| %>
-  <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %><br>
-  <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72 %><br>
-  <%= form.submit "Sign in" %>
-<% end %>
-<br>
-
-<%= link_to "Forgot password?", new_password_path %>
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-6 col-lg-5">
+      <div class="card shadow">
+        <div class="card-body p-4">
+          <h2 class="card-title text-center mb-4">Sign In</h2>
+          
+          <% if flash[:alert] %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <%= flash[:alert] %>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          <% end %>
+          
+          <% if flash[:notice] %>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <%= flash[:notice] %>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          <% end %>
+          
+          <%= form_with url: session_path, local: true do |form| %>
+            <div class="mb-3">
+              <%= form.label :email_address, "Email Address", class: "form-label" %>
+              <%= form.email_field :email_address, 
+                  required: true, 
+                  autofocus: true, 
+                  autocomplete: "username", 
+                  placeholder: "Enter your email address", 
+                  value: params[:email_address],
+                  class: "form-control form-control-lg" %>
+            </div>
+            
+            <div class="mb-3">
+              <%= form.label :password, "Password", class: "form-label" %>
+              <%= form.password_field :password, 
+                  required: true, 
+                  autocomplete: "current-password", 
+                  placeholder: "Enter your password", 
+                  maxlength: 72,
+                  class: "form-control form-control-lg" %>
+            </div>
+            
+            <div class="d-grid gap-2">
+              <%= form.submit "Sign in", class: "btn btn-primary btn-lg" %>
+            </div>
+          <% end %>
+          
+          <div class="text-center mt-3">
+            <%= link_to "Forgot password?", new_password_path, class: "text-decoration-none" %>
+          </div>
+          
+        </div>
+      </div>
+      
+      <div class="text-center mt-3">
+        <small class="text-muted">
+          <i class="bi bi-lock-fill"></i> Secure connection
+        </small>
+      </div>
+    </div>
+  </div>
+</div>

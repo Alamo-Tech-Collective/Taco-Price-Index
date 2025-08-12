@@ -8,10 +8,7 @@ class ApplicationController < ActionController::Base
   private
   
   def current_user
-    @current_user ||= begin
-      session = Session.find_by(id: cookies.signed[:session_token])
-      session&.user
-    end
+    Current.user
   end
   
   def require_admin

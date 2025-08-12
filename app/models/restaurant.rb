@@ -9,7 +9,11 @@ class Restaurant < ApplicationRecord
   
   # Geocoding
   geocoded_by :full_address
-  after_validation :geocode, if: ->(obj){ obj.full_address.present? && (obj.street_address_changed? || obj.city_changed? || obj.state_changed? || obj.zip_changed?) }
+  after_validation :geocode, if: ->(obj){ 
+    obj.full_address.present? && 
+    (obj.latitude.blank? || obj.longitude.blank?) &&
+    (obj.street_address_changed? || obj.city_changed? || obj.state_changed? || obj.zip_changed?) 
+  }
   
   # Store business hours as JSON in a text field
   serialize :business_hours, coder: JSON

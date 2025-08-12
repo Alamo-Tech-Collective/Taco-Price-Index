@@ -1,19 +1,69 @@
-<div class="container-fluid">
-  <div class="row">
+<div class="container-fluid map-view-container">
+  <div class="row h-100">
     <!-- Map Container -->
-    <div class="col-md-9">
-      <div id="map" style="height: 600px;" data-controller="map" data-map-restaurants-value="<%= @restaurants.to_json %>">
+    <div class="col-md-9 p-0">
+      <div id="map" data-controller="map" data-map-restaurants-value="<%= @restaurants.to_json %>">
       </div>
     </div>
 
-    <!-- Restaurant List -->
-    <div class="col-md-3">
+    <!-- Restaurant List Panel -->
+    <div class="col-md-3 restaurant-list-panel">
       <div class="card">
         <div class="card-header">
-          <h5 class="card-title mb-0">Taco Places</h5>
+          <h5 class="card-title">Taco Places</h5>
         </div>
         <div class="card-body">
-          <%= render 'frontend_pages/restaurant_list' %>
+          <% if @restaurants.any? %>
+            <div class="restaurant-list">
+              <% @restaurants.each do |restaurant| %>
+                <%= link_to restaurant_path(restaurant), class: "restaurant-item", data: { restaurant_id: restaurant.id } do %>
+                  <div class="restaurant-header">
+                    <div class="restaurant-info">
+                      <h5><%= restaurant.name %></h5>
+                      <p class="text-muted mb-1">
+                        <%= restaurant.street_address %>
+                        <% if restaurant.city.present? %>
+                          <br><small><%= restaurant.city %>, <%= restaurant.state %></small>
+                        <% end %>
+                      </p>
+                      <div class="price-info">
+                        <% avg_price_cents = restaurant.tacos.average(:price_cents) %>
+                        <% if avg_price_cents.present? %>
+                          <strong><%= number_to_currency(avg_price_cents / 100.0, precision: 2) %></strong> avg
+                        <% else %>
+                          <span class="price-unavailable">Price unavailable</span>
+                        <% end %>
+                      </div>
+                    </div>
+                    <div class="restaurant-actions">
+                      <div class="restaurant-rating">
+                        <% if restaurant.google_rating.present? %>
+                          <%= number_with_precision(restaurant.google_rating, precision: 1) %>
+                          <span class="star">★</span>
+                        <% end %>
+                      </div>
+                      <button class="btn btn-sm btn-favorite" 
+                              data-controller="favorite"
+                              data-action="click->favorite#toggle"
+                              data-favorite-restaurant-id-value="<%= restaurant.id %>"
+                              data-favorite-favorited-value="<%= @user&.favorite_restaurants&.exists?(restaurant.id) %>"
+                              onclick="event.preventDefault(); event.stopPropagation();">
+                        Favorite
+                      </button>
+                      <span class="favorite-count <%= restaurant.user_favorites_count.to_i == 0 ? 'zero' : '' %>">
+                        <%= restaurant.user_favorites_count.to_i %>
+                      </span>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="empty-state">
+              <h5>No restaurants found</h5>
+              <p>Try adjusting your search or check back later.</p>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>

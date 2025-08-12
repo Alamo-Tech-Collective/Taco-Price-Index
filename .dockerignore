@@ -45,7 +45,32 @@
 
 # Ignore development files
 /.devcontainer
+/.idea
+/.vscode
+/coverage
+/.rspec_local
 
 # Ignore Docker-related files
 /.dockerignore
 /Dockerfile*
+/docker-compose*.yml
+
+# Ignore data collection scripts
+/data_collection/
+
+# Ignore test files in production
+/test/
+/spec/
+
+# Ignore documentation
+*.md
+/docs/
+
+# Ignore page templates
+/page_templates/
+
+# Ignore local scripts
+/script/
+
+# Ignore CLAUDE.md
+CLAUDE.md

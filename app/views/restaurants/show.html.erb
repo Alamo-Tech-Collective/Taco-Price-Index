@@ -137,49 +137,6 @@
         <div class="card-body p-0">
           <% if @restaurant.latitude.present? && @restaurant.longitude.present? %>
             <!-- Map Container -->
-            <div 
-              data-controller="map"
-              data-map-api-key-value="<%= ENV['GOOGLE_MAPS_API_KEY'] %>"
-              data-map-markers-value='<%= @markers.to_json %>'
-              data-map-center-value='<%= @map_center.to_json %>'
-              data-map-zoom-value="15"
-              style="height: 400px; width: 100%; min-height: 300px; background-color: #f0f0f0;"
-              class="map-container rounded"
-            >
-              <div class="d-flex justify-content-center align-items-center h-100">
-                <div class="spinner-border text-primary" role="status">
-                  <span class="visually-hidden">Loading map...</span>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Debug Info (temporarily visible for debugging) -->
-            <div class="card mt-3" data-map-debug>
-              <div class="card-header d-flex justify-content-between align-items-center">
-                <h6 class="mb-0">Map Debug Info</h6>
-                <button class="btn btn-sm btn-outline-secondary" 
-                        onclick="document.querySelector('[data-map-debug] .card-body').classList.toggle('d-none')">
-                  Toggle Debug
-                </button>
-              </div>
-              <div class="card-body">
-                <div class="mb-2">
-                  <strong>Markers:</strong>
-                  <pre class="mb-0"><%= @markers.inspect %></pre>
-                </div>
-                <div class="mb-2">
-                  <strong>Center:</strong>
-                  <pre class="mb-0"><%= @map_center.inspect %></pre>
-                </div>
-                <div class="mb-2">
-                  <strong>API Key:</strong> <%= ENV['GOOGLE_MAPS_API_KEY'].present? ? 'Present' : 'Missing' %>
-                </div>
-                <div id="map-debug-output" class="mt-3 p-2 bg-light border rounded small">
-                  <div class="text-muted">Debug output will appear here...</div>
-                </div>
-              </div>
-            </div>
-            
             <div class="map-container" 
                  data-controller="map" 
                  data-map-markers-value='<%= @markers.to_json.html_safe %>'
@@ -193,29 +150,6 @@
                 </div>
               </div>
             </div>
-            
-            <script>
-              // Helper function to log to both console and debug output
-              function debugLog(message, data) {
-                console.log(message, data || '');
-                const debugOutput = document.getElementById('map-debug-output');
-                if (debugOutput) {
-                  const entry = document.createElement('div');
-                  entry.className = 'mb-1';
-                  entry.textContent = `[${new Date().toISOString()}] ${message}`;
-                  if (data) {
-                    const dataEl = document.createElement('pre');
-                    dataEl.className = 'mb-0 mt-1 small';
-                    dataEl.textContent = JSON.stringify(data, null, 2);
-                    entry.appendChild(dataEl);
-                  }
-                  debugOutput.prepend(entry);
-                }
-              }
-              
-              // Expose debug function globally for use in the map controller
-              window.debugLog = debugLog;
-            </script>
             <div class="p-3 border-top">
               <div class="d-flex align-items-center">
                 <i class="bi bi-heart-fill text-danger me-2"></i>

@@ -28,21 +28,33 @@ document.addEventListener('turbo:load', function() {
     })
   }
 
-  // Handle tab navigation
-  const tabLinks = document.querySelectorAll('.nav-link')
+  // Handle tab navigation (only for Bootstrap tabs, not navbar links)
+  const tabLinks = document.querySelectorAll('.nav-tabs .nav-link, .nav-pills .nav-link')
   tabLinks.forEach(link => {
     link.addEventListener('click', function(e) {
-      e.preventDefault()
-      const targetId = this.getAttribute('href')
-      const target = document.querySelector(targetId)
-      
-      // Remove active class from all tabs and panels
-      document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'))
-      document.querySelectorAll('.tab-pane').forEach(panel => panel.classList.remove('active'))
-      
-      // Add active class to selected tab and panel
-      this.classList.add('active')
-      target.classList.add('active')
+      // Only prevent default if this is a hash link (for tabs)
+      const href = this.getAttribute('href')
+      if (href && href.startsWith('#')) {
+        e.preventDefault()
+        const target = document.querySelector(href)
+        
+        if (target) {
+          // Remove active class from all tabs and panels in the same container
+          const tabContainer = this.closest('.nav-tabs, .nav-pills')
+          const contentContainer = target.closest('.tab-content')
+          
+          if (tabContainer) {
+            tabContainer.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'))
+          }
+          if (contentContainer) {
+            contentContainer.querySelectorAll('.tab-pane').forEach(panel => panel.classList.remove('active'))
+          }
+          
+          // Add active class to selected tab and panel
+          this.classList.add('active')
+          target.classList.add('active')
+        }
+      }
     })
   })
 

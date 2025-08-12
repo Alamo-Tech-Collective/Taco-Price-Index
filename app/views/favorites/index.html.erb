@@ -1,0 +1,71 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>My Favorite Restaurants</h1>
+  </div>
+
+  <% if @favorite_restaurants.any? %>
+    <div class="row g-4">
+      <% @favorite_restaurants.each do |restaurant| %>
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">
+                <%= link_to restaurant.name, restaurant_path(restaurant), class: "text-decoration-none" %>
+              </h5>
+              
+              <div class="mb-2">
+                <% if restaurant.google_rating.present? && restaurant.google_rating > 0 %>
+                  <span class="badge bg-warning text-dark">
+                    <%= number_with_precision(restaurant.google_rating, precision: 1) %> 
+                    <i class="bi bi-star-fill"></i>
+                  </span>
+                <% end %>
+                <span class="badge bg-secondary">
+                  <i class="bi bi-heart-fill"></i> <%= restaurant.user_favorites_count %> favorites
+                </span>
+              </div>
+              
+              <p class="card-text text-muted small">
+                <i class="bi bi-geo-alt"></i>
+                <%= restaurant.street_address %><br>
+                <%= [restaurant.city, restaurant.state, restaurant.zip].compact.join(', ') %>
+              </p>
+              
+              <% if restaurant.phone.present? %>
+                <p class="card-text small">
+                  <i class="bi bi-telephone"></i>
+                  <%= link_to restaurant.phone, "tel:#{restaurant.phone}" %>
+                </p>
+              <% end %>
+              
+              <div class="d-flex justify-content-between align-items-center mt-3">
+                <%= link_to "View Details", restaurant_path(restaurant), class: "btn btn-sm btn-outline-primary" %>
+                
+                <button class="btn btn-sm btn-danger" 
+                        data-controller="favorite-remove"
+                        data-action="click->favorite-remove#toggle"
+                        data-favorite-remove-restaurant-id-value="<%= restaurant.id %>"
+                        data-favorite-remove-url-value="<%= toggle_favorite_restaurant_path(restaurant) %>">
+                  <i class="bi bi-heart-fill"></i> Remove
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="alert alert-info" role="alert">
+      <h4 class="alert-heading">No Favorites Yet!</h4>
+      <p>You haven't added any restaurants to your favorites list.</p>
+      <hr>
+      <p class="mb-0">
+        <%= link_to "Browse Restaurants", restaurants_path, class: "btn btn-primary" %>
+        <%= link_to "Explore Map", root_path, class: "btn btn-outline-primary ms-2" %>
+      </p>
+    </div>
+  <% end %>
+</div>
+
+<!-- Add Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">

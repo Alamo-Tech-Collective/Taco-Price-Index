@@ -1,15 +1,10 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Simple debug logger
+// Simple debug logger - disabled for production
 const debug = (...args) => {
-  console.log('[MapController]', ...args);
-  const debugOutput = document.getElementById('map-debug-output');
-  if (debugOutput) {
-    const line = document.createElement('div');
-    line.textContent = `[${new Date().toISOString().split('T')[1].slice(0, -1)}] ${args.join(' ')}`;
-    debugOutput.appendChild(line);
-    debugOutput.scrollTop = debugOutput.scrollHeight;
-  }
+  // Console logging disabled for cleaner output
+  // Uncomment for debugging:
+  // console.log('[MapController]', ...args);
 };
 
 // Global state
@@ -26,25 +21,14 @@ export default class extends Controller {
   connect() {
     debug('Map controller connected');
     
-    // Create map container
+    // Create map container - simplified without debug panel
     this.element.innerHTML = `
-      <div style="height: 500px; width: 100%; position: relative;">
-        <div id="map" style="height: 100%; width: 100%; border: 1px solid #ccc;"></div>
-        <div id="map-debug" style="position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.9); padding: 10px; max-width: 400px; max-height: 400px; overflow: auto; border: 1px solid #ccc; z-index: 1000; font-size: 12px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-            <h5 style="margin: 0;">Map Debug</h5>
-            <button id="clear-debug" style="padding: 2px 5px; font-size: 10px;">Clear</button>
-          </div>
-          <div id="map-debug-output" style="font-family: monospace; font-size: 11px; line-height: 1.3;"></div>
-        </div>
+      <div style="height: 100%; width: 100%; position: relative;">
+        <div id="map" style="height: 100%; width: 100%;"></div>
       </div>
     `;
     
-    // Add clear button handler
-    this.element.querySelector('#clear-debug')?.addEventListener('click', () => {
-      const output = document.getElementById('map-debug-output');
-      if (output) output.innerHTML = '';
-    });
+    // Debug panel removed for cleaner UI
     
     this.mapElement = this.element.querySelector('#map');
     this.debugOutput = this.element.querySelector('#map-debug-output');

@@ -23,9 +23,6 @@
             <% if authenticated? %>
               <ul class="navbar-nav">
                 <li class="nav-item">
-                  <%= link_to 'My Profile', frontend_pages_user_profile_path, class: 'nav-link' %>
-                </li>
-                <li class="nav-item">
                   <%= link_to 'My Favorites', favorites_path, class: 'nav-link' %>
                 </li>
                 <li class="nav-item">
@@ -66,18 +63,18 @@
             <div class="col-md-4">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title">Leaderboard</h5>
-                  <p class="card-text">See the best taco places in your area</p>
-                  <%= link_to 'View Leaderboard', frontend_pages_restaurant_leaderboard_path, class: 'btn btn-primary' %>
+                  <h5 class="card-title">All Restaurants</h5>
+                  <p class="card-text">Browse all taco places in San Antonio</p>
+                  <%= link_to 'View Restaurants', restaurants_path, class: 'btn btn-primary' %>
                 </div>
               </div>
             </div>
             <div class="col-md-4">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title">Spotlight</h5>
-                  <p class="card-text">Featured taco places and reviews</p>
-                  <%= link_to 'View Spotlight', frontend_pages_featured_spotlight_path, class: 'btn btn-primary' %>
+                  <h5 class="card-title">My Favorites</h5>
+                  <p class="card-text">View your favorite taco places</p>
+                  <%= link_to 'View Favorites', favorites_path, class: 'btn btn-primary' %>
                 </div>
               </div>
             </div>

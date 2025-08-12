@@ -94,13 +94,40 @@
 
   </head>
 
-  <body class="bg-light">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-      <div class="container">
-        <a class="navbar-brand" href="<%= root_path %>">Taco Price Index</a>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+      <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="<%= root_path %>">
+          🌮 Taco Price Index
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <%= link_to "Map", root_path, class: "nav-link #{current_page?(root_path) ? 'active' : ''}" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Restaurants", restaurants_path, class: "nav-link #{current_page?(restaurants_path) ? 'active' : ''}" %>
+            </li>
+            <% if authenticated? %>
+              <li class="nav-item">
+                <%= link_to "Favorites", favorites_path, class: "nav-link #{current_page?(favorites_path) ? 'active' : ''}" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "Logout", session_path, method: :delete, data: { turbo_method: :delete }, class: "nav-link" %>
+              </li>
+            <% else %>
+              <li class="nav-item">
+                <%= link_to "Login", new_session_path, class: "nav-link" %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
       </div>
     </nav>
-    <main class="container">
+    <main>
       <%= yield %>
     </main>
 
