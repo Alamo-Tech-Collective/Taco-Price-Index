@@ -18,6 +18,9 @@ class Restaurant < ApplicationRecord
   # Store business hours as JSON in a text field
   serialize :business_hours, coder: JSON
 
+  # Validations
+  validates :website, format: { with: URI::DEFAULT_PARSER.make_regexp(%w[http https]), message: "must be a valid URL" }, allow_blank: true
+
   # Virtual attribute for simple hours display
   attr_accessor :hours
 

@@ -66,7 +66,7 @@
                 <% if @restaurant.website.present? %>
                   <p class="mb-1">
                     <i class="bi bi-globe"></i>
-                    <%= link_to URI.parse(@restaurant.website).host, @restaurant.website, target: "_blank", rel: "noopener" %>
+                    <%= safe_website_link(@restaurant.website) %>
                   </p>
                 <% end %>
                 
@@ -386,7 +386,7 @@
             <li class="mb-2">
               <i class="bi bi-globe me-2"></i>
               <% if @restaurant.website.present? %>
-                <%= link_to URI.parse(@restaurant.website).host, @restaurant.website, target: "_blank", rel: "noopener" %>
+                <%= safe_website_link(@restaurant.website) %>
               <% else %>
                 No website
               <% end %>
